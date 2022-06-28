@@ -1,0 +1,15 @@
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/extension-methods
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/extension-methods.deps.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/extension-methods.runtimeconfig.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/extension-methods.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/ref/extension-methods.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/bin/Debug/net6.0/extension-methods.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.csproj.AssemblyReference.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.GeneratedMSBuildEditorConfig.editorconfig
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.AssemblyInfoInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.AssemblyInfo.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.csproj.CoreCompileInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/ref/extension-methods.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/15-06/extension-methods/obj/Debug/net6.0/extension-methods.genruntimeconfig.cache

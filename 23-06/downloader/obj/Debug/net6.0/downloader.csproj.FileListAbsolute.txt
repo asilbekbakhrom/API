@@ -1,0 +1,15 @@
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/downloader
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/downloader.deps.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/downloader.runtimeconfig.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/downloader.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/ref/downloader.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/bin/Debug/net6.0/downloader.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.csproj.AssemblyReference.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.GeneratedMSBuildEditorConfig.editorconfig
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.AssemblyInfoInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.AssemblyInfo.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.csproj.CoreCompileInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/ref/downloader.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/23-06/downloader/obj/Debug/net6.0/downloader.genruntimeconfig.cache

@@ -1,0 +1,15 @@
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/dictionary
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/dictionary.deps.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/dictionary.runtimeconfig.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/dictionary.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/ref/dictionary.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/bin/Debug/net6.0/dictionary.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.csproj.AssemblyReference.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.GeneratedMSBuildEditorConfig.editorconfig
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.AssemblyInfoInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.AssemblyInfo.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.csproj.CoreCompileInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/ref/dictionary.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/10-06/dictionary/obj/Debug/net6.0/dictionary.genruntimeconfig.cache

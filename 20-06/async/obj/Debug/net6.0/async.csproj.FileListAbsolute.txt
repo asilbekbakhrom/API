@@ -1,0 +1,15 @@
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/async
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/async.deps.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/async.runtimeconfig.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/async.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/ref/async.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/bin/Debug/net6.0/async.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.csproj.AssemblyReference.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.GeneratedMSBuildEditorConfig.editorconfig
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.AssemblyInfoInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.AssemblyInfo.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.csproj.CoreCompileInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/ref/async.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/20-06/async/obj/Debug/net6.0/async.genruntimeconfig.cache

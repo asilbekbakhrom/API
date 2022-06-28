@@ -1,0 +1,15 @@
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/oop
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/oop.deps.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/oop.runtimeconfig.json
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/oop.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/ref/oop.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/bin/Debug/net6.0/oop.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.csproj.AssemblyReference.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.GeneratedMSBuildEditorConfig.editorconfig
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.AssemblyInfoInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.AssemblyInfo.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.csproj.CoreCompileInputs.cache
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/ref/oop.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.pdb
+/Users/wahid/Developer/vscode/net-bootcamp-002/13-06/oop/obj/Debug/net6.0/oop.genruntimeconfig.cache
