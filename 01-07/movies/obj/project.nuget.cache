@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "a/955LC7wDcsMAp2lRZazyYYGY2/0WN/W4DnRK1T0C9rRk5P9vxFeLOsaaBXZQM45zfiVKljU9WKpj+jhxlgeQ==",
+  "success": true,
+  "projectFilePath": "/Users/wahid/Developer/vscode/net-bootcamp-002/01-07/movies/movies.csproj",
+  "expectedPackageFiles": [
+    "/Users/wahid/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/Users/wahid/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/wahid/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "/Users/wahid/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "/Users/wahid/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "/Users/wahid/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
