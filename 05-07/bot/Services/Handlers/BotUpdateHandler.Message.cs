@@ -34,10 +34,21 @@ public partial class BotUpdateHandler
         var from = message.From;
         _logger.LogInformation("From: {from.Firstname}", from?.FirstName);
 
-        await client.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Thank you!",
-            replyToMessageId: message.MessageId, 
-            cancellationToken: token);
+        if(message.Text.Contains("uz", StringComparison.CurrentCultureIgnoreCase))
+        {
+            await _userService.UpdateLanguageCodeAsync(from.Id, "uz-Uz");
+        }
+        else if(message.Text.Contains("en", StringComparison.CurrentCultureIgnoreCase))
+        {
+            await _userService.UpdateLanguageCodeAsync(from.Id, "en-Us");
+        }
+        else
+        {
+            await client.SendTextMessageAsync(
+                chatId: message.Chat.Id,
+                text: _localizer["greeting"],
+                replyToMessageId: message.MessageId, 
+                cancellationToken: token);
+        }
     }
 }
