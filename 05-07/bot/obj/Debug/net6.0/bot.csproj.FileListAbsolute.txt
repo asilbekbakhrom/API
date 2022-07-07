@@ -63,3 +63,7 @@
 /Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/bin/Debug/net6.0/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/bin/Debug/net6.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/bin/Debug/net6.0/runtimes/win-x86/native/e_sqlite3.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/bin/Debug/net6.0/ru/bot.resources.dll
+/Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/obj/Debug/net6.0/bot.Resources.BotLocalizer.ru.resources
+/Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/obj/Debug/net6.0/ru/bot.resources.cs
+/Users/wahid/Developer/vscode/net-bootcamp-002/05-07/bot/obj/Debug/net6.0/ru/bot.resources.dll

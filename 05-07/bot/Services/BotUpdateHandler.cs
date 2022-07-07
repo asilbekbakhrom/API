@@ -46,6 +46,7 @@ public partial class BotUpdateHandler : IUpdateHandler
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
             UpdateType.EditedMessage => HandleEditMessageAsync(botClient, update.EditedMessage, cancellationToken),
+            UpdateType.CallbackQuery => HandleCallbackQueryAsync(botClient, update.CallbackQuery, cancellationToken),
             // handle other updates
             _ => HandleUnknownUpdate(botClient, update, cancellationToken)
         };
