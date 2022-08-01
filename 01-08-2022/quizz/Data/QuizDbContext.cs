@@ -6,7 +6,7 @@ namespace quizz.Data;
 
 public class QuizDbContext : DbContext
 {
-    public DbSet<Quiz>? Quizes { get; set; }
+    public DbSet<Quiz> Quizes { get; set; }
 
     public QuizDbContext(DbContextOptions options)
         : base(options) { }
