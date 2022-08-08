@@ -9,7 +9,7 @@ public class EntityBaseConfiguration<T> : IEntityTypeConfiguration<T> where T : 
     {
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Id).ValueGeneratedOnAdd();
-        builder.Property(b => b.CreatedAt).ValueGeneratedOnAdd();
-        builder.Property(b => b.UpdatedAt).ValueGeneratedOnAddOrUpdate();
+        builder.Property(b => b.CreatedAt).HasColumnType("datetime2").IsRequired();
+        builder.Property(b => b.UpdatedAt).HasColumnType("datetime2").IsRequired();
     }
 }

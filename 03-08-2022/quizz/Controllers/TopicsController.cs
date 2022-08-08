@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using quizz.Dtos;
 using quizz.Dtos.Topic;
 using quizz.Repositories;
@@ -41,6 +42,34 @@ public class TopicsController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult GetTopic([FromRoute]ulong id)
+    {
+        var response = new ResponseBase<Topic>();
+        var topic = _unitOfWork.Topics.GetById(id);
+
+        if(topic is null)
+        {
+            response.Error = new Error()
+            {
+                Message = $"Topic with ID {id} not found",
+                Code = StatusCodes.Status404NotFound
+            };
+
+            return NotFound(response);
+        }
+
+        response.Data = ToDto(topic);
+
+        return Ok(response);
+    }
+    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostTopic(CreateTopicDto model)
@@ -54,13 +83,85 @@ public class TopicsController : ControllerBase
             var result = await _unitOfWork.Topics.Add(entity);
             _unitOfWork.Save();
 
-            return Created("/", ToDto(result));
+            return CreatedAtAction(nameof(GetTopic), new { id = result.Id }, ToDto(result));
+        }
+        catch(SqliteException sqlException)
+        {
+            return BadRequest($"Database exception: {sqlException?.InnerException?.Message}");
         }
         catch(Exception e)
         {
             // TO-DO: we want to handle conflict error
             return BadRequest(e.Message);
         }
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult DeleteTopic(ulong id)
+    {
+        var response  = new ResponseBase<Topic>();
+
+        var topic = _unitOfWork.Topics.GetById(id);
+        if(topic is null)
+        {
+            response.Error = new Error()
+            {
+                Message = $"Topic with ID {id} not found",
+                Code = StatusCodes.Status404NotFound
+            };
+
+            return NotFound(response);
+        }
+
+        var deletedTopic = _unitOfWork.Topics.Remove(topic);
+        _unitOfWork.Save();
+        response.Data = ToDto(deletedTopic);
+
+        return Ok(response);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult UpdateTopic([FromRoute]ulong id, [FromBody]UdpateTopicDto model)
+    {
+        if(!ModelState.IsValid)
+        {
+            return BadRequest(model);
+        }
+
+        var response  = new ResponseBase<Topic>();
+
+        var topic = _unitOfWork.Topics.GetById(id);
+        if(topic is null)
+        {
+            response.Error = new Error()
+            {
+                Message = $"Topic with ID {id} not found",
+                Code = StatusCodes.Status404NotFound
+            };
+
+            return NotFound(response);
+        }
+
+        topic.Name = model.Name;
+        topic.Description = model.Description;
+        topic.Difficulty = model.Difficulty switch
+        {
+            ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,
+            ETopicDifficulty.Intermidiate => Entities.ETopicDifficulty.Intermidiate,
+            _ => Entities.ETopicDifficulty.Advanced,
+        };
+
+        var updatedTopic = _unitOfWork.Topics.Update(topic);
+        _unitOfWork.Save();
+
+        response.Data = ToDto(topic);
+        return Ok(response);
     }
 
     private Entities.Topic ToEntity(CreateTopicDto dto)

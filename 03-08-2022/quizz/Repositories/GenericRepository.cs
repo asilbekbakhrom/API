@@ -12,7 +12,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _context = context;
     }
 
-    public async ValueTask<TEntity> Add(TEntity entity)
+    public async ValueTask<TEntity> AddAsync(TEntity entity)
     {
         var entry = await _context.Set<TEntity>().AddAsync(entity);
 
@@ -25,8 +25,8 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression)
         => _context.Set<TEntity>().Where(expression);
 
-    public IEnumerable<TEntity> GetAll()
-        => _context.Set<TEntity>().ToList();
+    public IQueryable<TEntity> GetAll()
+        => _context.Set<TEntity>();
 
     public TEntity? GetById(ulong id)
         => _context.Set<TEntity>().Find(id);
@@ -34,6 +34,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public TEntity Remove(TEntity entity)
     {
         var entry = _context.Set<TEntity>().Remove(entity);
+        return entry.Entity;
+    }
+
+    public TEntity Update(TEntity entity)
+    {
+        var entry = _context.Set<TEntity>().Update(entity);
         return entry.Entity;
     }
 
