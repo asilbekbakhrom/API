@@ -13,6 +13,9 @@ public partial class TopicService
     public static Topic ToModel(Entities.Topic entity)
     => new()
     {
+        Id = entity.Id,
+        CreatedAt = entity.CreatedAt,
+        UpdatedAt = entity.UpdatedAt,
         Name = entity.Name,
         Description = entity.Description,
         Difficulty = ToModel(entity.Difficulty)
