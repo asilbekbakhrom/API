@@ -4,13 +4,13 @@ namespace quizz.Services;
 
 public partial class TopicService
 {
-    public Entities.Topic ToEntity(Topic model)
+    public static Entities.Topic ToEntity(Topic model)
     => new(
         name: model.Name ?? throw new NullReferenceException(nameof(model.Name)),
         description: model.Description ?? throw new NullReferenceException(nameof(model.Description)),
         difficulty: ToEntity(model.Difficulty));
 
-    public Topic ToModel(Entities.Topic entity)
+    public static Topic ToModel(Entities.Topic entity)
     => new()
     {
         Name = entity.Name,
@@ -18,7 +18,7 @@ public partial class TopicService
         Difficulty = ToModel(entity.Difficulty)
     };
 
-    public ETopicDifficulty ToModel(Entities.ETopicDifficulty entity)
+    public static ETopicDifficulty ToModel(Entities.ETopicDifficulty entity)
     => entity switch
     {
         Entities.ETopicDifficulty.Beginner => ETopicDifficulty.Beginner,
@@ -26,7 +26,7 @@ public partial class TopicService
         _ => ETopicDifficulty.Advanced,
     };
 
-    public Entities.ETopicDifficulty ToEntity(ETopicDifficulty model)
+    public static Entities.ETopicDifficulty ToEntity(ETopicDifficulty model)
     => model switch
     {
         ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,

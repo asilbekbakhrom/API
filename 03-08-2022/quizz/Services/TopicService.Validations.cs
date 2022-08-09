@@ -11,7 +11,7 @@ public partial class TopicService
             throw new TopicServiceDependencyException();
         }
 
-        if(topics.Any())
+        if(!topics.Any())
         {
             throw new TopicNotFoundException();
         }

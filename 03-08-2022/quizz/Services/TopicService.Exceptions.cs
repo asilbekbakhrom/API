@@ -13,11 +13,14 @@ public partial class TopicService
         {
             return await task();
         }
-        catch(Exception)
+        catch(Exception ex)
         {
+            _logger.LogError($"Error occured at {nameof(TopicService)}: {ex.Message}", ex);
+
             throw;
         }
     }
+
 
     public async ValueTask<List<Topic>> TryCatch(TopicListReturningFunction task)
     {
@@ -25,8 +28,10 @@ public partial class TopicService
         {
             return await task();
         }
-        catch(Exception)
+        catch(Exception ex)
         {
+            _logger.LogError($"Error occured at {nameof(TopicService)}: {ex.Message}", ex);
+
             throw;
         }
     }

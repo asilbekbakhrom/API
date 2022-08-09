@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using quizz.Data;
 using quizz.Repositories;
+using quizz.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<ITopicService, TopicService>();
 
 var app = builder.Build();
 
