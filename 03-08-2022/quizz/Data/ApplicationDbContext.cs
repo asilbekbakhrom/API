@@ -1,9 +1,8 @@
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using quizz.Entities;
+using quizz.Utils;
 
 namespace quizz.Data;
 
@@ -60,12 +59,9 @@ public class ApplicationDbContext : DbContext
         {
             if(entry.Entity is Topic topic)
             {
-                using var sha256 = SHA256.Create();
-                var nameBytes = Encoding.UTF8.GetBytes(topic.Name 
-                    ?? throw new ArgumentNullException(nameof(topic.Name)));
-                var hashBytes = sha256.ComputeHash(nameBytes);
+                
 
-                topic.NameHash = Encoding.UTF8.GetString(hashBytes);
+                topic.NameHash = topic?.Name?.Sha256();
             }
         }
     }

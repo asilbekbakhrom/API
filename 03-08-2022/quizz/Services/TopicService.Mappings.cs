@@ -1,14 +1,16 @@
+using quizz.Models.Topic;
+
 namespace quizz.Services;
 
 public partial class TopicService
 {
-    public Entities.Topic ToEntity(Models.Topic model)
+    public Entities.Topic ToEntity(Topic model)
     => new(
         name: model.Name ?? throw new NullReferenceException(nameof(model.Name)),
         description: model.Description ?? throw new NullReferenceException(nameof(model.Description)),
         difficulty: ToEntity(model.Difficulty));
 
-    public Models.Topic ToModel(Entities.Topic entity)
+    public Topic ToModel(Entities.Topic entity)
     => new()
     {
         Name = entity.Name,
@@ -16,19 +18,19 @@ public partial class TopicService
         Difficulty = ToModel(entity.Difficulty)
     };
 
-    public Models.ETopicDifficulty ToModel(Entities.ETopicDifficulty entity)
+    public ETopicDifficulty ToModel(Entities.ETopicDifficulty entity)
     => entity switch
     {
-        Entities.ETopicDifficulty.Beginner => Models.ETopicDifficulty.Beginner,
-        Entities.ETopicDifficulty.Intermediate => Models.ETopicDifficulty.Intermediate,
-        _ => Models.ETopicDifficulty.Advanced,
+        Entities.ETopicDifficulty.Beginner => ETopicDifficulty.Beginner,
+        Entities.ETopicDifficulty.Intermediate => ETopicDifficulty.Intermediate,
+        _ => ETopicDifficulty.Advanced,
     };
 
-    public Entities.ETopicDifficulty ToEntity(Models.ETopicDifficulty model)
+    public Entities.ETopicDifficulty ToEntity(ETopicDifficulty model)
     => model switch
     {
-        Models.ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,
-        Models.ETopicDifficulty.Intermediate => Entities.ETopicDifficulty.Intermediate,
+        ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,
+        ETopicDifficulty.Intermediate => Entities.ETopicDifficulty.Intermediate,
         _ => Entities.ETopicDifficulty.Advanced,
     };
 }

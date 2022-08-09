@@ -1,4 +1,4 @@
-namespace quizz.Models;
+namespace quizz.Models.Topic;
 
 public enum ETopicDifficulty
 {

@@ -4,7 +4,7 @@ namespace quizz.Services;
 
 public partial class TopicService
 {
-    public void ValidateQueryTopicsAsync(IQueryable<Entities.Topic>? topics)
+    public void ValidateQueryTopics(IQueryable<Entities.Topic>? topics)
     {
         if(topics is null)
         {
@@ -15,5 +15,19 @@ public partial class TopicService
         {
             throw new TopicNotFoundException();
         }
+    }
+
+    public void ValidateName(string name)
+    {
+        if(string.IsNullOrWhiteSpace(name))
+        {
+            throw new TopicServiceValidationException(nameof(Models.Topic.Topic.Name));
+        }
+    }
+
+    public void ValidateTopicModel(Models.Topic.Topic model)
+    {
+        if(model is null)
+            throw new TopicServiceValidationException();
     }
 }

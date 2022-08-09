@@ -1,11 +1,25 @@
+using quizz.Models.Topic;
+
 namespace quizz.Services;
 
 public partial class TopicService
 {
-    public delegate ValueTask<Models.Topic> TopicReturningFunction();
-    public delegate ValueTask<IEnumerable<Models.Topic>> TopicListReturningFunction();
+    public delegate ValueTask<Topic> TopicReturningFunction();
+    public delegate ValueTask<List<Topic>> TopicListReturningFunction();
 
-    public async ValueTask<Models.Topic> TryCatch(TopicReturningFunction task)
+    public async ValueTask<Topic> TryCatch(TopicReturningFunction task)
+    {
+        try
+        {
+            return await task();
+        }
+        catch(Exception)
+        {
+            throw;
+        }
+    }
+
+    public async ValueTask<List<Topic>> TryCatch(TopicListReturningFunction task)
     {
         try
         {

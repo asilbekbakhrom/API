@@ -8,8 +8,8 @@ public interface IGenericRepository<TEntity> where TEntity : class
     IQueryable<TEntity> GetAll();
     IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
     ValueTask<TEntity> AddAsync(TEntity entity);
-    void AddRange(IEnumerable<TEntity> entities);
-    TEntity Remove(TEntity entity);
-    void RemoveRange(IEnumerable<TEntity> entities);
-    TEntity Update(TEntity entity);
+    ValueTask AddRange(IEnumerable<TEntity> entities);
+    ValueTask<TEntity> Remove(TEntity entity);
+    ValueTask RemoveRange(IEnumerable<TEntity> entities);
+    ValueTask<TEntity> Update(TEntity entity);
 }

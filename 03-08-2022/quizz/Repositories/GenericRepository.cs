@@ -16,11 +16,17 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         var entry = await _context.Set<TEntity>().AddAsync(entity);
 
+        await _context.SaveChangesAsync();
+
         return entry.Entity;
     }
 
-    public async void AddRange(IEnumerable<TEntity> entities)
-        => await _context.Set<TEntity>().AddRangeAsync(entities);
+    public async ValueTask AddRange(IEnumerable<TEntity> entities)
+    {
+        await _context.Set<TEntity>().AddRangeAsync(entities);
+        
+        await _context.SaveChangesAsync();
+    }
 
     public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression)
         => _context.Set<TEntity>().Where(expression);
@@ -31,18 +37,29 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public TEntity? GetById(ulong id)
         => _context.Set<TEntity>().Find(id);
 
-    public TEntity Remove(TEntity entity)
+    public async ValueTask<TEntity> Remove(TEntity entity)
     {
         var entry = _context.Set<TEntity>().Remove(entity);
+
+        await _context.SaveChangesAsync();
+
         return entry.Entity;
     }
 
-    public TEntity Update(TEntity entity)
+    public async ValueTask<TEntity> Update(TEntity entity)
     {
         var entry = _context.Set<TEntity>().Update(entity);
+
+        await _context.SaveChangesAsync();
+
         return entry.Entity;
     }
 
-    public void RemoveRange(IEnumerable<TEntity> entities)
-        => _context.Set<TEntity>().RemoveRange(entities);
+    public async ValueTask RemoveRange(IEnumerable<TEntity> entities)
+    {
+        _context.Set<TEntity>().RemoveRange(entities);
+
+        await _context.SaveChangesAsync();
+    }
+
 }

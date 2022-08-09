@@ -1,12 +1,14 @@
+using quizz.Models.Topic;
+
 namespace quizz.Services;
 
 public interface ITopicService
 {
-    ValueTask<IEnumerable<Models.Topic>> GetAllPaginatedAsync(int page, int limit);
-    ValueTask<Models.Topic> GetByIdAsync(ulong id);
-    ValueTask<Models.Topic> FindByNameAsync(string name);
-    ValueTask<Models.Topic> RemoveAsync(Models.Topic topic);
-    ValueTask<Models.Topic> CreateAsync(Models.Topic topic);
-    ValueTask<Models.Topic> UpdateAsync(Models.Topic topic);
+    ValueTask<List<Topic>> GetAllPaginatedTopicsAsync(int page, int limit);
+    ValueTask<Topic> GetByIdAsync(ulong id);
+    ValueTask<Topic> FindByNameAsync(string name);
+    ValueTask<Topic> RemoveAsync(Topic topic);
+    ValueTask<Topic> CreateAsync(Topic topic);
+    ValueTask<Topic> UpdateAsync(Topic topic);
 
 }
