@@ -11,7 +11,6 @@ namespace quizz.Controllers;
 [Route("api/[controller]")]
 public class TopicsController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<TopicsController> _logger;
     private readonly ITopicService _topicService;
 
@@ -25,156 +24,92 @@ public class TopicsController : ControllerBase
 
     [HttpGet]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<List<Topic>>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Topic>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Error))]
     public async Task<IActionResult> GetTopics([FromQuery]Pagination pagination)
     {
-        var topicDtos = (await _topicService
-            .GetAllPaginatedTopicsAsync(pagination.Page, pagination.Limit))
-            .Select(ToDto)
-            .ToList();
-
-        var response =  new ResponseBase<List<Topic>>()
-        {
-            Data = topicDtos,
-            Pagination = pagination
-        };
-
-        return Ok(response);
+        var topicsResult = await _topicService.GetAllPaginatedTopicsAsync(pagination.Page, pagination.Limit);
+        if(!topicsResult.IsSuccess)
+            return NotFound(new { ErrorMessage = topicsResult.ErrorMessage });
+    
+        return Ok(topicsResult?.Data?.Select(ToDto));
     }
 
-    // [HttpGet]
-    // [Route("{id}")]
-    // [Produces("application/json")]
-    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public IActionResult GetTopic([FromRoute]ulong id)
-    // {
-    //     var response = new ResponseBase<Topic>();
-    //     var topic = _unitOfWork.Topics.GetById(id);
+    [HttpGet]
+    [Route("{id}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Topic))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Error))]
+    public async Task<IActionResult> GetTopic([FromRoute]ulong id)
+    {
+        if(id < 1)
+            return BadRequest(new { ErrorMessage = "ID is wrong."});
 
-    //     if(topic is null)
-    //     {
-    //         response.Error = new Error()
-    //         {
-    //             Message = $"Topic with ID {id} not found",
-    //             Code = StatusCodes.Status404NotFound
-    //         };
+        var topicResult = await _topicService.GetByIdAsync(id);
 
-    //         return NotFound(response);
-    //     }
+        if(!topicResult.IsSuccess || topicResult.Data is null)
+            return NotFound(new { ErrorMessage = topicResult.ErrorMessage });
 
-    //     response.Data = ToDto(topic);
-
-    //     return Ok(response);
-    // }
+        return Ok(ToDto(topicResult.Data));
+    }
     
 
-    // [HttpPost]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // public async Task<IActionResult> PostTopic(CreateTopicDto model)
-    // {
-    //     if(!ModelState.IsValid) return BadRequest(model);
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Topic))]
+    public async Task<IActionResult> PostTopic(CreateTopicDto model)
+    {
+        if(!ModelState.IsValid) 
+            return BadRequest(model);
+        
+        var createTopicResult = await _topicService.CreateAsync(model.Name!, model.Description!, ToModel(model.Difficulty));
+        if(!createTopicResult.IsSuccess)
+            return BadRequest(new { ErrorMessage = createTopicResult.ErrorMessage });
+        
+        return CreatedAtAction(nameof(GetTopic), new { Id = createTopicResult?.Data?.Id }, ToDto(createTopicResult?.Data!));
+    }
 
-    //     var entity = ToEntity(model);
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Error))]
+    public async Task<IActionResult> DeleteTopic(ulong id)
+    {
+        var removeTopicResult = await _topicService.RemoveByIdAsync(id);
 
-    //     try
-    //     {
-    //         var result = await _unitOfWork.Topics.Add(entity);
-    //         _unitOfWork.Save();
+        if(!removeTopicResult.IsSuccess || removeTopicResult.Data is null)
+            return NotFound(new { ErrorMessage = removeTopicResult.ErrorMessage });
 
-    //         return CreatedAtAction(nameof(GetTopic), new { id = result.Id }, ToDto(result));
-    //     }
-    //     catch(SqliteException sqlException)
-    //     {
-    //         return BadRequest($"Database exception: {sqlException?.InnerException?.Message}");
-    //     }
-    //     catch(Exception e)
-    //     {
-    //         // TO-DO: we want to handle conflict error
-    //         return BadRequest(e.Message);
-    //     }
-    // }
+        return Ok();
+    }
 
-    // [HttpDelete("{id}")]
-    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public IActionResult DeleteTopic(ulong id)
-    // {
-    //     var response  = new ResponseBase<Topic>();
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Topic))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Error))]
+    public async Task<IActionResult> UpdateTopic([FromRoute]ulong id, [FromBody]UdpateTopicDto model)
+    {
+        if(!ModelState.IsValid)
+            return BadRequest(model);
+        
+        if(!await _topicService.ExistsAsync(id))
+            return NotFound(new { ErrorMessage = "Topic with given ID not found." });
 
-    //     var topic = _unitOfWork.Topics.GetById(id);
-    //     if(topic is null)
-    //     {
-    //         response.Error = new Error()
-    //         {
-    //             Message = $"Topic with ID {id} not found",
-    //             Code = StatusCodes.Status404NotFound
-    //         };
+        var updateTopicResult = await _topicService.UpdateAsync(id, model.Name!, model.Description!, ToModel(model.Difficulty));
+        if(!updateTopicResult.IsSuccess)
+            return BadRequest(new { ErrorMessage = updateTopicResult.ErrorMessage });
+        
+        return Ok(ToDto(updateTopicResult?.Data!));
+    }
 
-    //         return NotFound(response);
-    //     }
-
-    //     var deletedTopic = _unitOfWork.Topics.Remove(topic);
-    //     _unitOfWork.Save();
-    //     response.Data = ToDto(deletedTopic);
-
-    //     return Ok(response);
-    // }
-
-    // [HttpPut("{id}")]
-    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseBase<Topic>))]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public IActionResult UpdateTopic([FromRoute]ulong id, [FromBody]UdpateTopicDto model)
-    // {
-    //     if(!ModelState.IsValid)
-    //     {
-    //         return BadRequest(model);
-    //     }
-
-    //     var response  = new ResponseBase<Topic>();
-
-    //     var topic = _unitOfWork.Topics.GetById(id);
-    //     if(topic is null)
-    //     {
-    //         response.Error = new Error()
-    //         {
-    //             Message = $"Topic with ID {id} not found",
-    //             Code = StatusCodes.Status404NotFound
-    //         };
-
-    //         return NotFound(response);
-    //     }
-
-    //     topic.Name = model.Name;
-    //     topic.Description = model.Description;
-    //     topic.Difficulty = model.Difficulty switch
-    //     {
-    //         ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,
-    //         ETopicDifficulty.Intermidiate => Entities.ETopicDifficulty.Intermidiate,
-    //         _ => Entities.ETopicDifficulty.Advanced,
-    //     };
-
-    //     var updatedTopic = _unitOfWork.Topics.Update(topic);
-    //     _unitOfWork.Save();
-
-    //     response.Data = ToDto(topic);
-    //     return Ok(response);
-    // }
-
-    // private Entities.Topic ToEntity(CreateTopicDto dto)
-    //     => new(
-    //         dto.Name!,
-    //         dto.Description!,
-    //         dto.Difficulty switch
-    //         {
-    //             ETopicDifficulty.Beginner => Entities.ETopicDifficulty.Beginner,
-    //             ETopicDifficulty.Intermidiate => Entities.ETopicDifficulty.Intermidiate,
-    //             _ => Entities.ETopicDifficulty.Advanced,
-    //         });
+    private Models.Topic.ETopicDifficulty ToModel(ETopicDifficulty difficulty)
+    => difficulty switch
+    {
+        ETopicDifficulty.Beginner => Models.Topic.ETopicDifficulty.Beginner,
+        ETopicDifficulty.Intermidiate => Models.Topic.ETopicDifficulty.Intermediate,
+        _ => Models.Topic.ETopicDifficulty.Advanced,
+    };
 
     private Topic ToDto(Models.Topic.Topic entity)
     {

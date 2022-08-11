@@ -4,12 +4,6 @@ namespace quizz.Services;
 
 public partial class TopicService
 {
-    public static Entities.Topic ToEntity(Topic model)
-    => new(
-        name: model.Name ?? throw new NullReferenceException(nameof(model.Name)),
-        description: model.Description ?? throw new NullReferenceException(nameof(model.Description)),
-        difficulty: ToEntity(model.Difficulty));
-
     public static Topic ToModel(Entities.Topic entity)
     => new()
     {

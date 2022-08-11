@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using quizz.Models;
 using quizz.Models.Topic;
-using quizz.Models.Topic.Exceptions;
 using quizz.Repositories;
 using quizz.Utils;
 
@@ -16,69 +16,123 @@ public partial class TopicService : ITopicService
         _unitOfWork = unitOfWork;
         _logger = logger;
     }
-    public ValueTask<Topic> CreateAsync(Topic topic)
-    => TryCatch(async () =>
+
+    public async ValueTask<bool> ExistsAsync(ulong id)
     {
-        var createdTopic = await _unitOfWork.Topics.AddAsync(ToEntity(topic));
+        var topicResult = await GetByIdAsync(id);
+        return topicResult.IsSuccess;
+    }
 
-        return ToModel(createdTopic);
-    });
-
-    public ValueTask<Topic> FindByNameAsync(string name)
-    => TryCatch(async () =>
+    public async ValueTask<Result<Topic>> CreateAsync(string name, string description, ETopicDifficulty difficulty)
     {
-        ValidateName(name);
+        if(string.IsNullOrWhiteSpace(name))
+            return new("Name is invalid.");
+        
+        if(string.IsNullOrWhiteSpace(description))
+            return new("Description is invalid");
+        
+        var topicEntity = new Entities.Topic(name, description, ToEntity(difficulty));
 
-        var nameHash = name.Sha256();
+        try
+        {
+            var createdTopic = await _unitOfWork.Topics.AddAsync(topicEntity);
+            
+            return new(true) { Data = ToModel(createdTopic) }; 
+        }
+        catch(Exception e)
+        {
+            _logger.LogError($"Error occured at {nameof(TopicService)}", e);
+            
+            return new("Couldn't create topic. Contact support.");
+        }
+    }
 
-        var topic = await _unitOfWork.Topics.GetAll().FirstOrDefaultAsync(t => t.NameHash == nameHash);
-
-        return ToModel(topic ?? throw new TopicNotFoundException());
-    });
-
-    public ValueTask<List<Topic>> GetAllPaginatedTopicsAsync(int page, int limit)
-    => TryCatch(async () =>
+    public async ValueTask<Result<Topic>> FindByNameAsync(string name)
     {
-        var topics = _unitOfWork.Topics.GetAll();
+        if(string.IsNullOrWhiteSpace(name))
+            return new("Name is invalid.");
+        try
+        {
+            var nameHash = name.Sha256();
 
-        ValidateQueryTopics(topics);
+            var existingTopic = await _unitOfWork.Topics.GetAll().FirstOrDefaultAsync(t => t.NameHash == nameHash);
+            if(existingTopic is null)
+                return new("No topic found for given name.");
 
-        return  await topics
+            return new(true) { Data = ToModel(existingTopic) };
+        }
+        catch(Exception e)
+        {
+            _logger.LogError($"Error occured at {nameof(TopicService)}", e);
+            
+            return new("Couldn't search topic. Contact support.");
+        }
+    }
+
+    public async ValueTask<Result<List<Topic>>> GetAllPaginatedTopicsAsync(int page, int limit)
+    {
+        var existingTopics = _unitOfWork.Topics.GetAll();
+        if(existingTopics is null)
+            return new("No topics found. Contact support.");
+
+        var filteredTopics = await existingTopics
             .Skip((page - 1) * limit)
             .Take(limit)
             .Select(e => ToModel(e))
             .ToListAsync();
-    });
+        
+        return new(true) { Data = filteredTopics };
+    }
 
-    public ValueTask<Topic> GetByIdAsync(ulong id)
-    => TryCatch(async () =>
+    public async ValueTask<Result<Topic>> GetByIdAsync(ulong id)
     {
-        var topic = await _unitOfWork.Topics.GetAll().FirstOrDefaultAsync(t => t.Id == id);
+        var existingTopic = await _unitOfWork.Topics.GetAll().FirstOrDefaultAsync(t => t.Id == id);
+        if(existingTopic is null)
+            return new("Topic with given ID not found.");
 
-        return ToModel(topic ?? throw new TopicNotFoundException());
-    });
+        return new(true) { Data = ToModel(existingTopic) };
+    }
 
-    public ValueTask<Topic> RemoveAsync(Topic topic)
-    => TryCatch(async () => 
+    public async ValueTask<Result<Topic>> RemoveByIdAsync(ulong id)
     {
-        ValidateTopicModel(topic);
+        var existingTopic = _unitOfWork.Topics.GetById(id);
+        if(existingTopic is null)
+            return new("Topic with given ID not found.");
 
-        var topicEntity = _unitOfWork.Topics.GetById(topic.Id);
+        var removedTopic = await _unitOfWork.Topics.Remove(existingTopic);
+        if(removedTopic is null)
+            return new("Removing the topic failed. Contact support.");
 
-        var existingTopic = await _unitOfWork.Topics.Remove(topicEntity ?? throw new TopicNotFoundException());
+        return new(true) { Data = ToModel(removedTopic) };
+    }
 
-        return ToModel(existingTopic);
-    });
-
-    public ValueTask<Topic> UpdateAsync(Topic topic)
-    => TryCatch(async () => 
+    public async ValueTask<Result<Topic>> UpdateAsync(ulong id, string name, string description, ETopicDifficulty difficulty)
     {
-        ValidateTopicModel(topic);
+        // TODO: Validate name, description
 
-        var topicEntity = _unitOfWork.Topics.GetById(topic.Id);
+        var existingTopic = _unitOfWork.Topics.GetById(id);
+        if(existingTopic is null)
+            return new("Topic with given ID not found.");
+        
+        existingTopic.Name = name;
+        existingTopic.Description = description;
+        existingTopic.Difficulty = ToEntity(difficulty);
 
-        var existingTopic = await _unitOfWork.Topics.Update(topicEntity ?? throw new TopicNotFoundException());
+        try
+        {
+            var updatedTopic = await _unitOfWork.Topics.Update(existingTopic);
 
-        return ToModel(existingTopic);
-    });
+            return new(true) { Data = ToModel(updatedTopic) };
+        }
+        catch(DbUpdateException dbUpdateException)
+        {
+            _logger.LogInformation("Error occured:", dbUpdateException);
+
+            return new("Topic name already exists.");
+        }
+        catch(Exception)
+        {
+            throw;
+        }
+    }
 }
