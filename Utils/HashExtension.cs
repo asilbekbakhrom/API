@@ -10,6 +10,7 @@ public static class HashExtension
         ArgumentNullException.ThrowIfNull(input);
 
         using var sha256 = SHA256.Create();
+        input = input.ToLower();
         var inputBytes = Encoding.UTF8.GetBytes(input);
         var hashBytes = sha256.ComputeHash(inputBytes);
 

@@ -103,18 +103,20 @@ public class TopicsController : ControllerBase
         return Ok(ToDto(updateTopicResult?.Data!));
     }
 
-    [HttpGet("{name}")]
+    [HttpGet]
+    [Route("{name}")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Topic))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Error))]
-    public async ValueTask<IActionResult> GetByNameAsync([FromForm]string Name)
+    public async Task<IActionResult> GetTopic([FromRoute]string name)
     {
-        if(Name is null)
-            return NotFound();
+        var topicResult = await _topicService.FindByNameAsync(name);
 
-        var topicResult = await _topicService.GetByNameAsync(Name);
+        if(!topicResult.IsSuccess || topicResult.Data is null)
+            return NotFound(new { ErrorMessage = topicResult.ErrorMessage });
 
-        return Ok(ToDto(topicResult?.Data!));
+        return Ok(ToDto(topicResult.Data));
     }
 
     private Models.Topic.ETopicDifficulty ToModel(ETopicDifficulty difficulty)

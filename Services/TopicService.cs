@@ -115,8 +115,7 @@ public partial class TopicService : ITopicService
 
     public async ValueTask<Result<Topic>> UpdateAsync(ulong id, string name, string description, ETopicDifficulty difficulty)
     {
-        // TODO: Validate name, description
-
+        
         var existingTopic = _unitOfWork.Topics.GetById(id);
         if(existingTopic is null)
             return new("Topic with given ID not found.");
